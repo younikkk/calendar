@@ -1,0 +1,157 @@
+#include<iostream>
+#include"library.h"
+#include<string>
+using namespace std;
+
+int LengthMonth(int year, int month)
+{
+	int LengthMonth;
+	string YearName;
+	if(year%4==0&&year%100!=0||year%400==0)
+		YearName="leapyear";
+	else
+		YearName="commonyear";
+	switch(month)
+	{
+		case 1:
+			LengthMonth=31;
+			break;
+		case 2:
+			if(YearName=="leapyear")
+				LengthMonth=29;
+			else 
+				LengthMonth=28;
+			break;
+		case 3:
+			LengthMonth=31;
+			break;
+		case 4:
+			LengthMonth=30;
+			break;
+		case 5:
+			LengthMonth=31;
+			break;
+		case 6:
+			LengthMonth=30;
+			break;
+		case 7:
+			LengthMonth=31;
+			break;
+		case 8:
+			LengthMonth=31;
+			break;
+		case 9:
+			LengthMonth=30;
+			break;
+		case 10:
+			LengthMonth=31;
+			break;
+		case 11:
+			LengthMonth=30;
+			break;
+		case 12:
+			LengthMonth=31;
+			break;
+	}
+			return LengthMonth;
+}
+
+
+int DayoftheForever(int year, int month ,int day)
+{
+	int DayoftheForever,i,j;
+	DayoftheForever=0;
+	for(j=0;j<year;j++)
+		for(i=1;i<=12;i++)
+			DayoftheForever=DayoftheForever+LengthMonth(j, i);
+	for(i=1;i<month;i++)
+			DayoftheForever=DayoftheForever+LengthMonth(year, i);
+	DayoftheForever=DayoftheForever+day;
+	return DayoftheForever;
+}
+
+int DayoftheWeek(int year, int month, int day)
+{
+	int n;
+	n=(DayoftheForever(year,month,day)+5)%7;
+	return n;
+}
+
+
+void main()
+{
+	int year,month,day;
+	cout<<"Enter the year : ";
+	cin>>year;
+	cout<<"Enter the month : ";
+	cin>>month;
+	day=1;
+	make_window(800,600);
+	set_font("Courier New");
+	move_to(0,100);
+	int t=month;
+	string MonthName;
+	for(t=month;t<month+3;t++)
+	{
+			switch(t)
+	{
+		case 1:
+			MonthName="January";
+			break;
+		case 2:
+			MonthName="February";
+			break;
+		case 3:
+			MonthName="March";
+			break;
+		case 4:
+			MonthName="April";
+			break;
+		case 5:
+			MonthName="May";
+			break;
+		case 6:
+			MonthName="June";
+			break;
+		case 7:
+			MonthName="July";
+			break;
+		case 8:
+			MonthName="Augest";
+			break;
+		case 9:
+			MonthName="September";
+			break;
+		case 10:
+			MonthName="October";
+			break;
+		case 11:
+			MonthName="November";
+			break;
+		case 12:
+			MonthName="December";
+			break;
+	}
+	write_string(MonthName);
+	write_new_line();
+	write_string("Su Mo Tu We Th Fr Sa");
+	write_new_line();
+	int e,r;
+	for(e=0;e<DayoftheWeek(year,t,day);e++)
+		write_string("   ");
+	for(r=1;r<=LengthMonth(year,t);r++)
+	{
+		if(r<10)
+		{
+			write_string(" ");
+		    write_string(r);
+		}
+		else
+			write_string(r);
+		write_string(" ");
+		if((r+e)%7==0)
+			write_new_line();
+	}
+	write_new_line();
+	}
+}
